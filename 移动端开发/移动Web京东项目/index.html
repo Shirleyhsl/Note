@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .clearfloat:before,
+        .clearfloat:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .clearfloat {
+            zoom: 1;
+        }
+
+        .wrapper {
+            max-width: 980px;
+            width: 100%;
+        }
+
+        /* 导航栏 */
+        .nav {
+            width: 100%;
+            height: 30px;
+            background-color: rgb(153, 26, 26, 0);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        /* 轮播图 */
+        .banner_container {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner {
+            width: 400%;
+            list-style: none;
+        }
+
+        .banner>li {
+            width: 25%;
+            float: left;
+        }
+
+        .banner>li>a>img {
+            width: 100%;
+        }
+
+        /* 点 */
+        .indicator {
+            list-style: none;
+            position: absolute;
+            bottom: 7px;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .indicator>li {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            float: left;
+            margin: 0 5px;
+        }
+
+        li.active {
+            background-color: #fff;
+        }
+
+        /* 倒计时 */
+        .time {
+            margin: 10px 0;
+        }
+
+        .time span {
+            background-color: black;
+            color: #fff;
+            padding: 5px;
+        }
+
+        .time span:nth-child(3),
+        .time span:nth-child(6) {
+            background-color: transparent;
+            color: black;
+        }
+
+        .test {
+            height: 1000px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wapper">
+        <!-- 导航栏 -->
+        <div class="nav">
+            导航栏
+        </div>
+        <!-- 轮播图 -->
+        <div class="banner_container">
+            <ul class="banner">
+                <li>
+                    <a href="javascript:;">
+                        <img src="./uploads/l1.jpg" alt="" class="banner_img">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <img src="./uploads/l2.jpg" alt="" class="src">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <img src="./uploads/l3.jpg" alt="" class="src">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <img src="./uploads/l4.jpg" alt="" class="src">
+                    </a>
+                </li>
+            </ul>
+            <ul class="indicator">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="time">
+            <span>0</span>
+            <span>0</span>
+            <span>:</span>
+            <span>0</span>
+            <span>0</span>
+            <span>:</span>
+            <span>0</span>
+            <span>0</span>
+        </div>
+        <div class="test">111</div>
+
+    </div>
+
+</body>
+
+<script>
+    window.onload = function () {
+        naVEffect();
+        TimeBack('2020-01-06-00-00-00');
+    }
+
+
+    function naVEffect() {
+        /* 设置导航随着页面变化透明度渐变效果 */
+        // 获取轮播图片的高度
+        const banner = document.getElementsByClassName('banner_img')[0];
+        console.log(banner)
+        // const bannerY = banner.offsetHeight
+        const bannerY = 160;
+
+        const nav = document.getElementsByClassName('nav')[0];
+        window.onscroll = function () {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            console.log(scrollTop);
+            if (scrollTop < bannerY) {
+                let opacity = scrollTop / bannerY;
+                nav.style.backgroundColor = `rgb(153, 26, 26, ${opacity})`;
+            } else {
+                nav.style.backgroundColor = "rgb(153, 26, 26, 1)";
+            }
+        }
+    }
+
+    /* 倒计时 */
+    function TimeBack(targetTimeString) {
+        let timeDive = document.querySelectorAll('.time span');
+        let targetTimeArr = targetTimeString.split('-');
+        let targetTime = new Date(targetTimeArr[0], targetTimeArr[1], targetTimeArr[2], targetTimeArr[3], targetTimeArr[4], targetTimeArr[5]).getTime();
+        let leftTime = targetTime - (new Date()).getTime();
+
+        let timer = setInterval(() => {
+            if(leftTime<=0) {
+                clearInterval(timer);
+                return;
+            }
+            leftTime--;
+            let hour = Math.floor(leftTime/3600);
+            console.log(hour)
+            let minute = Math.floor(leftTime%3600/60);
+            let second = leftTime % 60
+            timeDive[0].innerHTML = Math.floor(hour / 10);
+            timeDive[1].innerHTML = Math.floor(hour % 10)
+            timeDive[3].innerHTML = Math.floor(minute / 10);
+            timeDive[4].innerHTML = Math.floor(minute % 10);
+            timeDive[6].innerHTML = Math.floor(second / 10);
+            timeDive[7].innerHTML = Math.floor(second % 10);
+        }, 1000);
+        
+        console.log(leftTime)
+    }
+</script>
+
+</html>
