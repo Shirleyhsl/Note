@@ -6,9 +6,11 @@
     - [input中加入搜索按钮](#input中加入搜索按钮)
 - [图片](#图片)
     - [图片的基线问题](#图片的基线问题)
+    - [去除无src的<img>的边框](#去除无src的img的边框)
 - [文本](#文本)
     - [文本溢出](#文本溢出)
     - [多行文本溢出](#多行文本溢出)
+    - [一行文字居中，多行居左](#一行文字居中多行居左)
 
 <!-- /TOC -->
 ## 页面布局
@@ -138,6 +140,8 @@
 - 将字体大小设置为0
 - vertical-align: bottom
 
+### 去除无src的<img>的边框
+img没有src属性时，会有一个边框，这个边框是预留给alt的，是内联水平元素，可以使用text-index属性隐藏
 
 ## 文本
 ### 文本溢出
@@ -188,3 +192,21 @@
     - 结束的省略好用了半透明的png做了减淡的效果，或者设置背景颜色；
     - IE6-7不显示content内容，所以要兼容IE6-7可以是在内容中加入一个标签，比如用<span class="line-clamp">...</span>去模拟；
     - 要支持IE8，需要将::after替换成:after；
+
+### 一行文字居中，多行居左
+* 利用父元素text-align: center;，子元素自身设置text-align: left; 
+```css
+.box {
+  padding: 10px;
+  background-color: #cd0000;
+  text-align: center;
+}
+.content {
+    /* text-align作用在内联元素上 */
+  display: inline-block;  
+  text-align: left;
+}
+<div class="box">
+    <p class="content">文字</p>
+</div>
+```

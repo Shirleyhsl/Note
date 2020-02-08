@@ -19,8 +19,6 @@
     - [= zepto](#-zepto)
     - [iScroll, better-scroll](#iscroll-better-scroll)
     - [fastClick](#fastclick)
-    - [swipe](#swipe)
-    - [swiper (所有和滑动相关的)](#swiper-所有和滑动相关的)
 
 <!-- /TOC -->
 ## 像素
@@ -111,7 +109,3 @@
 - 滑动
 ### fastClick
 - 可以解决透传以及原生click延迟的影响
-### swipe
-- 轮播
-### swiper (所有和滑动相关的)
-- 移动端的触摸滑动
