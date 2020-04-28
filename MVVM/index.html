@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MVVM</title>
+</head>
+<body>
+    <!-- 数据劫持+发布订阅模式 -->
+    <script>
+        let obj = {};
+        Object.defineProperty(obj,'school',{
+            configurable:true,  //可配置，如删除
+            // writable:true,      //可写，如修改属性值,有get和set方法时，需要设置为false
+            enumerable:true,    //可枚举 
+            get(){
+                return 'hdu'
+            },
+            set(val){
+                console.log(val)
+            },
+            // value:'HDU'  // 有get和set方法时，不能声明value
+        })
+        // // delete obj.school;
+        obj.school= 'zjgs'
+        for(let key in obj){
+            console.log(key)
+        }
+        console.log(obj.school)
+    </script>
+</body>
+</html>

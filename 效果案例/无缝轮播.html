@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>无缝轮播</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        #continer {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            margin: 20px auto;
+            border: 1px solid;
+            overflow: hidden;
+        }
+
+        #lunbo {
+            width: 9999em;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        li {
+            float: left;
+            width: 300px;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+            color: brown;
+            font-size: 30px;
+        }
+
+        li:last-child {
+            background-color: tomato;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="continer">
+        <ul class="ul" id="lunbo">
+            <li class="list">1</li>
+            <li class="list">2</li>
+            <li class="list">3</li>
+            <li class="list">4</li>
+            <li class="list">5</li>
+        </ul>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<script>
+   /*
+    思路：向左滑动，主要控制最后一张切换的时候，能和第一张衔接
+    用一个变量num记录当前显示的第几张图片。
+        当num小于等于最后一张的时候，设置最后一张图片的位置为相对定位，left为0(也就是跟在所有的float图片后面)。
+        当超过最后一张图时，将最后一张图的位置移到第一张图的位置(position:absolute,left:0),然后设置向左过渡动画。
+        同时将轮播图怎么位移移回距离左端一张图片的距离（因为最后一张图占了）
+    
+   */
+    let selectNum = 0;
+    let slideWidth = 300;
+    let lastslideNum = 4;
+
+    function lunboFun(selectNum, time) {
+        $('#lunbo').animate({ 'left': -1 * selectNum * slideWidth}, time, () => {
+            selectNum++
+            setTimeout(() => {
+                //最后一张结束后，将最后一张移到第一张的位置前面并设置过度动画。
+               if (selectNum > 4) {
+                    selectNum = 0
+                    $('ul li:last').css({
+                        'position': 'absolute'
+                    }, 0)
+                    $('ul li:last').animate({
+                        'left': -slideWidth
+                    }, 0)
+                    $('#lunbo').animate({
+                        'left': slideWidth
+                    }, 0)
+                }else if (selectNum < lastslideNum-1) {
+                    //设置最后一张图的位置紧跟倒数第二张图的后面(跟在float元素的后面)
+                    $('ul li:last').css({
+                        'position': 'relative',
+                        'left': 0
+                    }, 0)
+                }
+                lunboFun(selectNum, 1000)
+
+            }, 2000)
+        });
+    }
+    lunboFun(selectNum, 1000)
+</script>
+
+</html>
