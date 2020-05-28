@@ -161,7 +161,22 @@ Document是DOM树的根节点。
     ele.className = "ui-border";
     ```
 
-    
+
+## 5. 全局 DOM 变量
+
+创建带有 id 属性 的 DOM 元素时也会创建同名的全局变量，因此
+
+```js
+<div id="foo"></div>
+if (typeof foo == "undefined") {
+ foo = 42; // 永远也不会运行
+}
+console.log( foo ); // HTML元素
+```
+
+
+
+
 
 
 
